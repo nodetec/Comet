@@ -52,21 +52,6 @@ export const EditorWrapper = () => {
     <div className="flex h-full flex-col">
       <EditorHeader />
       <LexEditor />
-      {/* <Editor /> */}
-      {/* {showPreview && <Preview />} */}
-      {/* <div className="fixed bottom-[3.75rem] right-2.5 p-2"> */}
-      {/*   <Button */}
-      {/*     id="editor-preview-btn" */}
-      {/*     name="editor-preview-btn" */}
-      {/*     type="button" */}
-      {/*     variant="ghost" */}
-      {/*     size="icon" */}
-      {/*     onClick={() => setShowPreview((prevShowPreview) => !prevShowPreview)} */}
-      {/*     className="rounded-full text-muted-foreground" */}
-      {/*   > */}
-      {/*     <Eye className="h-[1.2rem] w-[1.2rem]" /> */}
-      {/*   </Button> */}
-      {/* </div> */}
       <div className="flex items-center justify-between mt-1">
         {feedType === "trash"
           ? activeTrashNote && <ReadOnlyTagList trashNote={activeTrashNote} />
