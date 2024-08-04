@@ -5,13 +5,14 @@ import {
   ResizablePanelGroup,
 } from "~/components/ui/resizable";
 
-import EditorWrapper from "./components/editor/EditorWrapper";
 import Notes from "./components/notes/Notes";
 import useNoteMenu from "./hooks/useNoteMenu";
 import useNoteTagMenu from "./hooks/useNoteTagMenu";
 import useSettingsRefresh from "./hooks/useSettingsRefresh";
 import useTagMenu from "./hooks/useTagMenu";
 import useTrashNoteMenu from "./hooks/useTrashNoteMenu";
+import { Editor } from "./features/editor";
+// import { Editor } from "./features/editor";
 
 export default function App() {
   useNoteMenu();
@@ -32,7 +33,7 @@ export default function App() {
         </ResizablePanel>
         <ResizableHandle />
         <ResizablePanel minSize={40}>
-          <EditorWrapper />
+          <Editor />
         </ResizablePanel>
       </ResizablePanelGroup>
     </div>
