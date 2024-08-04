@@ -7,14 +7,14 @@ import {
   indentWithTab,
   insertNewlineAndIndent,
 } from "@codemirror/commands";
-import { markdown, markdownLanguage } from "@codemirror/lang-markdown";
+// import { markdown, markdownLanguage } from "@codemirror/lang-markdown";
 import {
   bracketMatching,
   indentOnInput,
   indentUnit,
   syntaxHighlighting,
 } from "@codemirror/language";
-import { languages } from "@codemirror/language-data";
+// import { languages } from "@codemirror/language-data";
 import { EditorState } from "@codemirror/state";
 import {
   crosshairCursor,
@@ -126,10 +126,10 @@ export const useEditor = ({ initialDoc, onChange }: Props) => {
       crosshairCursor(),
       EditorState.readOnly.of(feedType === "trash" ? true : false),
       keymap.of([indentWithTab]),
-      markdown({
-        base: markdownLanguage,
-        codeLanguages: languages,
-      }),
+      // markdown({
+      //   base: markdownLanguage,
+      //   codeLanguages: languages,
+      // }),
       indentUnit.of(indentUnitWhitespace(settings?.IndentSpaces)),
       blurHandlerExtension,
       EditorView.updateListener.of((update) => {
