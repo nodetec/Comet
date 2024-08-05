@@ -1,17 +1,6 @@
-import "prismjs";
-import "prismjs/components/prism-clike";
-import "prismjs/components/prism-javascript";
-import "prismjs/components/prism-markup";
-import "prismjs/components/prism-markdown";
-import "prismjs/components/prism-c";
-import "prismjs/components/prism-css";
-import "prismjs/components/prism-objectivec";
-import "prismjs/components/prism-sql";
-import "prismjs/components/prism-python";
-import "prismjs/components/prism-rust";
-import "prismjs/components/prism-swift";
+import { EditorThemeClasses } from "lexical";
 
-export const darkTheme = {
+const darkTheme: EditorThemeClasses = {
   code: "editor-code",
   heading: {
     h1: "text-4xl font-bold",
@@ -22,7 +11,7 @@ export const darkTheme = {
     h6: "font-bold",
   },
   image: "editor-image",
-  link: "editor-link",
+  link: "text-blue-500 underline",
   list: {
     listitem: "editor-listitem",
     nested: {
@@ -47,3 +36,12 @@ export const darkTheme = {
     underlineStrikethrough: "strikethrough underline",
   },
 };
+
+export function getTheme(theme: string) {
+  switch (theme) {
+    case "dark":
+      return darkTheme;
+    default:
+      return darkTheme;
+  }
+}

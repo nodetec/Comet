@@ -12,7 +12,6 @@ import useSettingsRefresh from "./hooks/useSettingsRefresh";
 import useTagMenu from "./hooks/useTagMenu";
 import useTrashNoteMenu from "./hooks/useTrashNoteMenu";
 import { Editor } from "./features/editor";
-// import { Editor } from "./features/editor";
 
 export default function App() {
   useNoteMenu();
