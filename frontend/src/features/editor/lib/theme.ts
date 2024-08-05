@@ -11,7 +11,7 @@ const darkTheme: EditorThemeClasses = {
     h6: "font-bold",
   },
   image: "editor-image",
-  link: "text-blue-500 underline",
+  link: "text-blue-500 underline cursor-pointer",
   list: {
     listitem: "editor-listitem",
     nested: {

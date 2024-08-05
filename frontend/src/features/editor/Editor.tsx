@@ -1,77 +1,59 @@
 import { CodeNode } from "@lexical/code";
 import { AutoLinkNode, LinkNode } from "@lexical/link";
 import { ListItemNode, ListNode } from "@lexical/list";
-// import {
-//   //   // $convertFromMarkdownString,
-//   //   // $convertToMarkdownString,
-//   TRANSFORMERS,
-// } from "@lexical/markdown";
-// import { AutoFocusPlugin } from "@lexical/react/LexicalAutoFocusPlugin";
+import {
+  $convertFromMarkdownString,
+  //   // $convertFromMarkdownString,
+  $convertToMarkdownString,
+  TRANSFORMERS,
+} from "@lexical/markdown";
+import { AutoFocusPlugin } from "@lexical/react/LexicalAutoFocusPlugin";
 // import { ClickableLinkPlugin } from "@lexical/react/LexicalClickableLinkPlugin";
 import {
   InitialConfigType,
   LexicalComposer,
 } from "@lexical/react/LexicalComposer";
-// import { useLexicalComposerContext } from "@lexical/react/LexicalComposerContext";
 import { ContentEditable } from "@lexical/react/LexicalContentEditable";
 import { LexicalErrorBoundary } from "@lexical/react/LexicalErrorBoundary";
-// import { HistoryPlugin } from "@lexical/react/LexicalHistoryPlugin";
+import { HistoryPlugin } from "@lexical/react/LexicalHistoryPlugin";
+import { OnChangePlugin } from "@lexical/react/LexicalOnChangePlugin";
 import { HorizontalRuleNode } from "@lexical/react/LexicalHorizontalRuleNode";
-// import { MarkdownShortcutPlugin } from "@lexical/react/LexicalMarkdownShortcutPlugin";
+import { MarkdownShortcutPlugin } from "@lexical/react/LexicalMarkdownShortcutPlugin";
 import { RichTextPlugin } from "@lexical/react/LexicalRichTextPlugin";
 import { HeadingNode, QuoteNode } from "@lexical/rich-text";
+import { useQueryClient } from "@tanstack/react-query";
+import { Note } from "&/github.com/nodetec/captains-log/db/models";
+import { NoteService } from "&/github.com/nodetec/captains-log/service";
+import { parseTitle } from "~/lib/markdown";
+import { useAppState } from "~/store";
+import { InfiniteQueryData } from "~/types";
+import { EditorState } from "lexical";
 
 import { getTheme } from "./lib/theme";
 import { LexicalAutoLinkPlugin } from "./plugins/AutoLinkPlugin";
+import ClickableLinkPlugin from "./plugins/ClickableLink";
 import { LinkPlugin } from "./plugins/LinkPlugin";
 import TreeViewPlugin from "./plugins/TreeViewPlugin";
-import ClickableLinkPlugin from "./plugins/ClickableLink";
 
 function onError(error: any) {
   console.error(error);
 }
 
-// const URL_MATCHER =
-//   /((https?:\/\/(www\.)?)|(www\.))[-a-zA-Z0-9@:%._+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_+.~#?&//=]*)/;
-
-// const MATCHERS = [
-//   (text) => {
-//     const match = URL_MATCHER.exec(text);
-//     if (match === null) {
-//       return null;
-//     }
-//     const fullMatch = match[0];
-//     return {
-//       index: match.index,
-//       length: fullMatch.length,
-//       text: fullMatch,
-//       url: fullMatch.startsWith("http") ? fullMatch : `https://${fullMatch}`,
-//       attributes: { rel: "noreferrer", target: "_blank" }, // Optional link attributes
-//     };
-//   },
-// ];
-
 export function Editor() {
-  // const [editor] = useLexicalComposerContext();
-  //
-  // const linkAttributes = {
-  //   target: "_blank",
-  //   rel: "noopener noreferrer",
-  // };
-  //
-  // editor.dispatchCommand(TOGGLE_LINK_COMMAND, {
-  //   url: "https://",
-  //   ...linkAttributes,
-  // });
+  // const { activeNote, activeTrashNote, feedType } = useAppState();
+
+  const { activeNote, setActiveNote } = useAppState();
 
   const initialConfig: InitialConfigType = {
     namespace: "MyEditor",
     theme: getTheme("dark"),
+    editorState: () =>
+      $convertFromMarkdownString(activeNote.Content ?? "", TRANSFORMERS),
     nodes: [
       HorizontalRuleNode,
       //   // BannerNode,
       HeadingNode,
-      //   // ImageNode,
+        // ImageNode,
       QuoteNode,
       CodeNode,
       ListNode,
@@ -82,25 +64,72 @@ export function Editor() {
     onError,
   };
 
+  const queryClient = useQueryClient();
+
+  const onChange = (editorState: EditorState) => {
+
+    console.log("onChange");
+    console.log(editorState);
+
+    const doc = $convertToMarkdownString(TRANSFORMERS);
+    console.log(doc);
+    const data = queryClient.getQueryData(["notes"]) as InfiniteQueryData<Note>;
+    if (!activeNote) return;
+    setActiveNote({ ...activeNote, Content: doc });
+    if (!data) return;
+    if (!data.pages) return;
+    // get all of the notes from the first page
+    const notes = data.pages[0].data;
+    // if there are no notes, return
+    if (!notes) return;
+    // get the first note
+    const firstNote = notes[0];
+    // if there is no first note, return
+    if (!firstNote) return;
+    // if the first note is the active note, return
+    if (firstNote.ID === activeNote.ID) return;
+
+    void NoteService.UpdateNote(
+      activeNote.ID,
+      parseTitle(doc),
+      doc,
+      activeNote.NotebookID,
+      activeNote.StatusID,
+      // TODO: rethink published indicator
+      false,
+      activeNote.EventID,
+
+      activeNote.Pinned,
+      activeNote.Notetype,
+      activeNote.Filetype,
+    );
+
+    void queryClient.invalidateQueries({
+      queryKey: ["notes"],
+    });
+  };
+
   return (
-    <LexicalComposer initialConfig={initialConfig}>
+    <LexicalComposer key={activeNote.ID} initialConfig={initialConfig}>
       <LexicalAutoLinkPlugin />
       <LinkPlugin />
-      <div className="flex">
+
+      <div className="flex flex-col">
         <RichTextPlugin
           contentEditable={
-            <ContentEditable className="h-full w-full overflow-auto border border-red-500 px-4 focus:outline-none" />
+            <ContentEditable className="mt-32 h-full min-h-80 w-full overflow-auto border border-red-500 px-4 focus:outline-none" />
           }
           // placeholder={<div>Enter some text...</div>}
           ErrorBoundary={LexicalErrorBoundary}
         />
         <TreeViewPlugin />
       </div>
+      <OnChangePlugin onChange={onChange} />
 
       <ClickableLinkPlugin />
-      {/* <MarkdownShortcutPlugin transformers={TRANSFORMERS} /> */}
-      {/* <HistoryPlugin /> */}
-      {/* <AutoFocusPlugin /> */}
+      <MarkdownShortcutPlugin transformers={TRANSFORMERS} />
+      <HistoryPlugin />
+      <AutoFocusPlugin />
     </LexicalComposer>
   );
 }

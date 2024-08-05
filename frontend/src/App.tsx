@@ -12,6 +12,7 @@ import useSettingsRefresh from "./hooks/useSettingsRefresh";
 import useTagMenu from "./hooks/useTagMenu";
 import useTrashNoteMenu from "./hooks/useTrashNoteMenu";
 import { Editor } from "./features/editor";
+import { useAppState } from "./store";
 
 export default function App() {
   useNoteMenu();
@@ -19,6 +20,8 @@ export default function App() {
   useNoteTagMenu();
   useTrashNoteMenu();
   useSettingsRefresh();
+
+  const { activeNote } = useAppState();
 
   return (
     <div className="flex h-dvh w-dvw flex-col items-center justify-center">
@@ -32,7 +35,7 @@ export default function App() {
         </ResizablePanel>
         <ResizableHandle />
         <ResizablePanel minSize={40}>
-          <Editor />
+          <Editor activeNote={activeNote} />
         </ResizablePanel>
       </ResizablePanelGroup>
     </div>
