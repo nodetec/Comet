@@ -3,7 +3,6 @@ import { AutoLinkNode, LinkNode } from "@lexical/link";
 import { ListItemNode, ListNode } from "@lexical/list";
 import { $convertFromMarkdownString, TRANSFORMERS } from "@lexical/markdown";
 import { AutoFocusPlugin } from "@lexical/react/LexicalAutoFocusPlugin";
-// import { ClickableLinkPlugin } from "@lexical/react/LexicalClickableLinkPlugin";
 import {
   InitialConfigType,
   LexicalComposer,
@@ -19,12 +18,11 @@ import { HeadingNode, QuoteNode } from "@lexical/rich-text";
 import { useAppState } from "~/store";
 import { EditorState } from "lexical";
 
-import { getTheme } from "./lib/theme";
-import { LexicalAutoLinkPlugin } from "./plugins/AutoLinkPlugin";
-import ClickableLinkPlugin from "./plugins/ClickableLink";
-import { LinkPlugin } from "./plugins/LinkPlugin";
-import TreeViewPlugin from "./plugins/TreeViewPlugin";
-
+import { getTheme } from "../lib/theme";
+import { LexicalAutoLinkPlugin } from "../plugins/AutoLinkPlugin";
+import { ClickableLinkPlugin } from "../plugins/ClickableLink";
+import { LinkPlugin } from "../plugins/LinkPlugin";
+import TreeViewPlugin from "../plugins/TreeViewPlugin";
 
 function onError(error: any) {
   console.error(error);
@@ -40,7 +38,7 @@ export function Editor({ onChange, id }: Props) {
 
   const initialConfig: InitialConfigType = {
     namespace: "MyEditor",
-    theme: getTheme("dark"),
+    // theme: getTheme("dark"),
     editorState: () =>
       $convertFromMarkdownString(activeNote.Content ?? "", TRANSFORMERS),
     nodes: [
@@ -63,16 +61,17 @@ export function Editor({ onChange, id }: Props) {
       <LexicalAutoLinkPlugin />
       <LinkPlugin />
 
-      <div className="flex flex-col">
+      {/* <div className="flex flex-col"> */}
         <RichTextPlugin
           contentEditable={
-            <ContentEditable className="mt-32 h-full min-h-80 w-full overflow-auto border-b px-4 focus:outline-none" />
+            <ContentEditable className="h-full max-w-none prose dark:prose-invert caret-blue-400 selection:bg-blue-300/25 w-full overflow-auto px-12 pb-80 focus:outline-none" />
           }
-          // placeholder={<div>Enter some text...</div>}
           ErrorBoundary={LexicalErrorBoundary}
         />
-        <TreeViewPlugin />
-      </div>
+        {/* <div className="overflow-auto"> */}
+        {/*   <TreeViewPlugin /> */}
+        {/* </div> */}
+      {/* </div> */}
       <OnChangePlugin onChange={onChange} />
 
       <ClickableLinkPlugin />

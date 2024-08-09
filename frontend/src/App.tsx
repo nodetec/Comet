@@ -103,7 +103,7 @@ export default function App() {
           <Notes />
         </ResizablePanel>
         <ResizableHandle />
-        <ResizablePanel minSize={40}>
+        <ResizablePanel className="mt-12" minSize={40}>
           <Editor onChange={onChange} id={activeNote.ID.toString()} />
         </ResizablePanel>
       </ResizablePanelGroup>

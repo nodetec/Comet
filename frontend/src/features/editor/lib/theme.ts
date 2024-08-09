@@ -1,9 +1,9 @@
 import { EditorThemeClasses } from "lexical";
 
 const darkTheme: EditorThemeClasses = {
-  code: "editor-code",
+  code: "font-monospace text-sm bg-neutral-800 p-1 rounded",
   heading: {
-    h1: "text-4xl font-bold",
+    h1: "scroll-m-20 text-3xl font-bold tracking-normal mb-7",
     h2: "text-3xl font-bold",
     h3: "text-2xl font-bold",
     h4: "text-xl font-bold",
@@ -20,11 +20,12 @@ const darkTheme: EditorThemeClasses = {
     ol: "editor-list-ol",
     ul: "editor-list-ul",
   },
-  ltr: "ltr",
-  paragraph: "editor-paragraph",
+  blockCursor: "bg-blue-500",
+  ltr: "text-left",
+  paragraph: "mb-3 leading-7 tracking-normal",
   placeholder: "editor-placeholder",
   quote: "editor-quote",
-  rtl: "rtl",
+  rtl: "text-right",
   text: {
     bold: "font-bold",
     code: "font-monospace text-sm bg-neutral-800 p-1 rounded",

@@ -33,6 +33,7 @@
     "@tanstack/react-query": "^5.51.21",
     "@tanstack/react-query-devtools": "^5.51.21",
     "@uiw/react-markdown-preview": "^5.1.2",
+    "@wailsio/runtime": "^3.0.0-alpha.26",
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.1.1",
     "cmdk": "^1.0.0",
@@ -52,8 +53,7 @@
     "tailwind-merge": "^2.4.0",
     "tailwindcss-animate": "^1.0.7",
     "zod": "^3.23.8",
-    "zustand": "^4.5.4",
-    "@wailsio/runtime": "^3.0.0-alpha.26"
+    "zustand": "^4.5.4"
   },
   "devDependencies": {
     "@ianvs/prettier-plugin-sort-imports": "^4.3.1",

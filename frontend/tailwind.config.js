@@ -17,6 +17,53 @@ module.exports = {
       },
     },
     extend: {
+      fontFamily: {
+        roboto: ["Roboto", "sans-serif"],
+        sans: ["Roboto", "sans-serif"],
+      },
+      typography: (theme) => ({
+        DEFAULT: {
+          css: {
+            h1: {
+              fontSize: theme("fontSize.3xl"),
+              marginTop: "1rem",
+              marginBottom: "1rem",
+            },
+            h2: {
+              fontSize: theme("fontSize.2xl"),
+              marginTop: "1rem",
+              marginBottom: "1rem",
+            },
+            h3: {
+              fontSize: theme("fontSize.xl"),
+              marginTop: "1rem",
+              marginBottom: "1rem",
+            },
+            h4: {
+              fontSize: theme("fontSize.lg"),
+              marginTop: "1rem",
+              marginBottom: "1rem",
+            },
+            p: {
+              marginTop: "0px",
+              marginBottom: "0px",
+            },
+            "code::before": {
+              content: '""',
+            },
+            "code::after": {
+              content: '""',
+            },
+            code: {
+              backgroundColor: theme("colors.muted.DEFAULT"),
+              color: theme("colors.foreground"),
+              padding: "0.25rem",
+              borderRadius: "0.25rem",
+            },
+          },
+        },
+      }),
+
       colors: {
         border: "hsl(var(--border))",
         input: "hsl(var(--input))",

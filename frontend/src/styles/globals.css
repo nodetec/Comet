@@ -68,6 +68,90 @@
 }
 
 @layer base {
+  @font-face {
+    font-family: "Roboto";
+    font-weight: 100;
+    font-style: normal;
+    src: url(/src/assets/fonts/Roboto/Roboto-Thin.ttf) format("truetype");
+  }
+
+  @font-face {
+    font-family: "Roboto";
+    font-weight: 100;
+    font-style: italic;
+    src: url(/src/assets/fonts/Roboto/Roboto-ThinItalic.ttf) format("truetype");
+  }
+
+  @font-face {
+    font-family: "Roboto";
+    font-weight: 300;
+    font-style: normal;
+    src: url(/src/assets/fonts/Roboto/Roboto-Light.ttf) format("truetype");
+  }
+
+  @font-face {
+    font-family: "Roboto";
+    font-weight: 300;
+    font-style: italic;
+    src: url(/src/assets/fonts/Roboto/Roboto-LightItalic.ttf) format("truetype");
+  }
+
+  @font-face {
+    font-family: "Roboto";
+    font-weight: 400;
+    font-style: normal;
+    src: url(/src/assets/fonts/Roboto/Roboto-Regular.ttf) format("truetype");
+  }
+
+  @font-face {
+    font-family: "Roboto";
+    src: url(/src/assets/fonts/Roboto/Roboto-Italic.ttf) format("truetype");
+    font-weight: 400;
+    font-style: italic;
+  }
+
+  @font-face {
+    font-family: "Roboto";
+    font-weight: 500;
+    font-style: normal;
+    src: url(/src/assets/fonts/Roboto/Roboto-Medium.ttf) format("truetype");
+  }
+
+  @font-face {
+    font-family: "Roboto";
+    src: url(/src/assets/fonts/Roboto/Roboto-MediumItalic.ttf) format("truetype");
+    font-weight: 500;
+    font-style: italic;
+  }
+
+  @font-face {
+    font-family: "Roboto";
+    font-weight: 700;
+    font-style: normal;
+    src: url(/src/assets/fonts/Roboto/Roboto-Bold.ttf) format("truetype");
+  }
+
+  @font-face {
+    font-family: "Roboto";
+    src: url(/src/assets/fonts/Roboto/Roboto-BoldItalic.ttf) format("truetype");
+    font-weight: 700;
+    font-style: italic;
+  }
+
+  @font-face {
+    font-family: "Roboto";
+    font-weight: 900;
+    font-style: normal;
+    src: url(/src/assets/fonts/Roboto/Roboto-Black.ttf) format("truetype");
+  }
+
+  @font-face {
+    font-family: "Roboto";
+    src: url(/src/assets/fonts/Roboto/Roboto-BlackItalic.ttf) format("truetype");
+    font-weight: 900;
+    font-style: italic;
+  }
+
   :root {
     text-rendering: optimizeLegibility;
     -webkit-font-smoothing: antialiased;
@@ -85,17 +169,9 @@
   }
 
   body {
+    @apply font-sans;
     @apply bg-background text-foreground;
   }
-}
-
-.wmde-markdown {
-  @apply !bg-background;
-  @apply !text-foreground;
-  font-family: monospace, ui-sans-serif, system-ui, sans-serif,
-    "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji" !important;
-  font-size: 12pt;
-  line-height: 2;
 }
 
 /* Scrollbar background */
