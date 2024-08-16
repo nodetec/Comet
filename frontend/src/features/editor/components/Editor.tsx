@@ -18,11 +18,11 @@ import { HeadingNode, QuoteNode } from "@lexical/rich-text";
 import { useAppState } from "~/store";
 import { EditorState } from "lexical";
 
-import { getTheme } from "../lib/theme";
+// import { getTheme } from "../lib/theme";
 import { LexicalAutoLinkPlugin } from "../plugins/AutoLinkPlugin";
 import { ClickableLinkPlugin } from "../plugins/ClickableLink";
 import { LinkPlugin } from "../plugins/LinkPlugin";
-import TreeViewPlugin from "../plugins/TreeViewPlugin";
+// import TreeViewPlugin from "../plugins/TreeViewPlugin";
 
 function onError(error: any) {
   console.error(error);
